@@ -1,0 +1,63 @@
+.task-list {
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.task-list h2 {
+  margin-top: 0;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.add-task-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.duration-input {
+  flex: 0 1 200px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.add-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-button:hover {
+  background-color: #45a049;
+}
+
+.tasks-container {
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.no-tasks {
+  text-align: center;
+  color: #757575;
+  font-style: italic;
+}
+
+/* For iPad landscape orientation */
+@media (min-width: 1024px) {
+  .add-task-form {
+    flex-wrap: nowrap;
+  }
+}
