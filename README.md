@@ -1,70 +1,69 @@
-# Getting Started with Create React App
+# Task Time Tracker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React application for tracking daily work time and individual tasks.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Daily Work Time Management**
+  - Input field for setting daily work time in minutes
+  - Timer display showing hours:minutes:seconds
+  - Gauge that decreases as time passes
+  - Start/Stop button
 
-### `npm start`
+- **Task Management**
+  - Input field for setting task duration in minutes
+  - Only one task can be active at a time
+  - Timer display showing minutes:seconds
+  - Gauge that decreases as time passes
+  - Start/Stop button
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Synchronized Timers**
+  - Both the Daily Work Time and Task timers start simultaneously when either Start button is clicked
+  - Both timers stop simultaneously when either Stop button is clicked
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Offline Functionality**
+  - The application works offline as it uses localStorage to save data
 
-### `npm test`
+## Getting Started
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Prerequisites
 
-### `npm run build`
+- Node.js and npm installed on your machine
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Installation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Clone the repository:
+   ```
+   git clone https://github.com/noritaketakamichi/task_tracker.git
+   cd task_tracker
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Install dependencies:
+   ```
+   npm install
+   ```
 
-### `npm run eject`
+3. Start the development server:
+   ```
+   npm start
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+4. Open your browser and navigate to `http://localhost:3000`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Usage
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. Set your daily work time in minutes
+2. Add a task with a specific duration
+3. Click the Start button to begin tracking time
+4. Click the Stop button to pause the timers
+5. Delete a task by clicking the X button
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Technologies Used
 
-## Learn More
+- React
+- CSS
+- localStorage for data persistence
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Designed For
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This application is optimized for iPad in landscape orientation.
