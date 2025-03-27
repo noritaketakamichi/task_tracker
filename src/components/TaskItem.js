@@ -29,7 +29,7 @@ const TaskItem = ({ task, onDelete, onToggleTask }) => {
   return (
     <div className="task-item">
       <div className="task-header">
-        <h3>Task</h3>
+        <div></div> {/* Empty div to maintain the space */}
         <button className="delete-button" onClick={() => onDelete()}>×</button>
       </div>
       <div className="time-display">{formatTime(remainingTime)}</div>

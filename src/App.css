@@ -25,35 +25,72 @@
 
 .daily-time-input {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
+  margin-bottom: 20px;
+  background-color: #e6f7ff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-left: 3px solid #2196f3;
+}
+
+.daily-time-input > label {
+  font-weight: bold;
+  color: #0066cc;
+  font-size: 1.2rem;
   margin-bottom: 10px;
 }
 
-.daily-time-input label {
-  font-weight: bold;
-  color: #333;
+.time-inputs {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-.daily-time-input input {
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  width: 100px;
+.time-input-group {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.time-input-group label {
+  font-weight: bold;
+  color: #0066cc;
   font-size: 1rem;
 }
 
+.time-input-group input {
+  padding: 10px;
+  border: 2px solid #bbdefb;
+  border-radius: 8px;
+  width: 70px;
+  font-size: 1.1rem;
+  text-align: center;
+  transition: all 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
 
+.time-input-group input:focus {
+  border-color: #2196f3;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.2);
+}
+
+.hours-input {
+  background-color: #e3f2fd;
+}
+
+.minutes-input {
+  background-color: #e3f2fd;
+}
+
+
+/* Always display components vertically */
 .app-content {
   display: grid;
   grid-template-columns: 1fr;
   gap: 20px;
-}
-
-/* For iPad landscape orientation */
-@media (min-width: 1024px) {
-  .app-content {
-    grid-template-columns: 1fr 2fr;
-  }
 }

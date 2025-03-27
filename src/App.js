@@ -5,7 +5,19 @@ import './App.css';
 
 function App() {
   // State for daily work time
-  const [dailyTime, setDailyTime] = useState(localStorage.getItem('dailyTime') ? parseInt(localStorage.getItem('dailyTime'), 10) : 480); // Default to 8 hours (480 minutes)
+  const [dailyHours, setDailyHours] = useState(() => {
+    const savedTime = localStorage.getItem('dailyTime') ? parseInt(localStorage.getItem('dailyTime'), 10) : 480;
+    return Math.floor(savedTime / 60); // Convert minutes to hours
+  });
+  
+  const [dailyMinutes, setDailyMinutes] = useState(() => {
+    const savedTime = localStorage.getItem('dailyTime') ? parseInt(localStorage.getItem('dailyTime'), 10) : 480;
+    return savedTime % 60; // Get remaining minutes
+  });
+  
+  // Calculate total daily time in minutes
+  const dailyTime = dailyHours * 60 + dailyMinutes;
+  
   const [isDailyTimerRunning, setIsDailyTimerRunning] = useState(false);
   
   // State for tasks
@@ -23,11 +35,19 @@ function App() {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
-  // Handle daily time input
-  const handleDailyTimeChange = (e) => {
+  // Handle daily hours input
+  const handleDailyHoursChange = (e) => {
     const value = parseInt(e.target.value, 10);
-    if (!isNaN(value) && value > 0) {
-      setDailyTime(value);
+    if (!isNaN(value) && value >= 0) {
+      setDailyHours(value);
+    }
+  };
+
+  // Handle daily minutes input
+  const handleDailyMinutesChange = (e) => {
+    const value = parseInt(e.target.value, 10);
+    if (!isNaN(value) && value >= 0 && value < 60) {
+      setDailyMinutes(value);
     }
   };
 
@@ -78,19 +98,36 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Task Time Tracker</h1>
       </header>
       
       <main className="App-main">
         <div className="daily-time-input">
-          <label htmlFor="daily-time">Daily Work Time (minutes):</label>
-          <input
-            type="number"
-            id="daily-time"
-            value={dailyTime}
-            onChange={handleDailyTimeChange}
-            min="1"
-          />
+          <label>Daily Work Time:</label>
+          <div className="time-inputs">
+            <div className="time-input-group">
+              <input
+                type="number"
+                id="daily-hours"
+                value={dailyHours}
+                onChange={handleDailyHoursChange}
+                min="0"
+                className="hours-input"
+              />
+              <label htmlFor="daily-hours">hours</label>
+            </div>
+            <div className="time-input-group">
+              <input
+                type="number"
+                id="daily-minutes"
+                value={dailyMinutes}
+                onChange={handleDailyMinutesChange}
+                min="0"
+                max="59"
+                className="minutes-input"
+              />
+              <label htmlFor="daily-minutes">minutes</label>
+            </div>
+          </div>
         </div>
         
         <div className="app-content">
