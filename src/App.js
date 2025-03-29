@@ -15,8 +15,9 @@ function App() {
     return savedTime % 60; // Get remaining minutes
   });
   
-  // Calculate total daily time in minutes
-  const dailyTime = dailyHours * 60 + dailyMinutes;
+  // Calculate total daily time in minutes, handling empty string values
+  const dailyTime = (dailyHours === '' ? 0 : parseInt(dailyHours, 10)) * 60 + 
+                    (dailyMinutes === '' ? 0 : parseInt(dailyMinutes, 10));
   
   const [isDailyTimerRunning, setIsDailyTimerRunning] = useState(false);
   
@@ -37,6 +38,17 @@ function App() {
 
   // Handle daily hours input
   const handleDailyHoursChange = (e) => {
+    // If the input is empty, set to empty string
+    if (e.target.value === '') {
+      setDailyHours('');
+      return;
+    }
+    
+    // Only allow half-width numeric characters (0-9)
+    if (!/^[0-9]+$/.test(e.target.value)) {
+      return;
+    }
+    
     const value = parseInt(e.target.value, 10);
     if (!isNaN(value) && value >= 0) {
       setDailyHours(value);
@@ -45,6 +57,17 @@ function App() {
 
   // Handle daily minutes input
   const handleDailyMinutesChange = (e) => {
+    // If the input is empty, set to empty string
+    if (e.target.value === '') {
+      setDailyMinutes('');
+      return;
+    }
+    
+    // Only allow half-width numeric characters (0-9)
+    if (!/^[0-9]+$/.test(e.target.value)) {
+      return;
+    }
+    
     const value = parseInt(e.target.value, 10);
     if (!isNaN(value) && value >= 0 && value < 60) {
       setDailyMinutes(value);
@@ -102,7 +125,7 @@ function App() {
       
       <main className="App-main">
         <div className="daily-time-input">
-          <label>Daily Work Time:</label>
+          <label>My Focus Time Today:</label>
           <div className="time-inputs">
             <div className="time-input-group">
               <input
@@ -127,6 +150,15 @@ function App() {
               />
               <label htmlFor="daily-minutes">minutes</label>
             </div>
+            <button 
+              className="reset-button"
+              onClick={() => {
+                setDailyHours('');
+                setDailyMinutes('');
+              }}
+            >
+              Reset
+            </button>
           </div>
         </div>
         

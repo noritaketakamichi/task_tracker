@@ -84,10 +84,10 @@
 
 .gauge-fill {
   height: 100%;
-  background: linear-gradient(to right, #2196f3, #03a9f4);
+  background: linear-gradient(to right, #ff9800, #ffb74d); /* Changed from blue to orange */
   border-radius: 20px;
   transition: width 0.3s ease-in-out, background 0.3s ease;
-  box-shadow: 0 0 10px rgba(33, 150, 243, 0.5);
+  box-shadow: 0 0 10px rgba(255, 152, 0, 0.5);
 }
 
 .daily-timer.overdue .gauge-background {

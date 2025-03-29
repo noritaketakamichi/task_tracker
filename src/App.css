@@ -87,6 +87,26 @@
   background-color: #e3f2fd;
 }
 
+.reset-button {
+  background-color: #9e9e9e; /* Changed from orange to gray */
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 2px 5px rgba(158, 158, 158, 0.3);
+  margin-left: 10px;
+}
+
+.reset-button:hover {
+  background-color: #757575; /* Changed from dark orange to dark gray */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(158, 158, 158, 0.4);
+}
+
 
 /* Always display components vertically */
 .app-content {

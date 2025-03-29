@@ -39,7 +39,7 @@ const DailyTimer = ({ dailyTime, isRunning, onTimerToggle }) => {
 
   return (
     <div className={`daily-timer ${isOverdue ? 'overdue' : ''}`}>
-      <h2>Daily Work Time {isOverdue && <span className="overdue-label">OVERDUE</span>}</h2>
+      <h2>My Focus Time Today {isOverdue && <span className="overdue-label">OVERDUE</span>}</h2>
       <div className="time-display">{formatTime(remainingTime)}</div>
       <div className="gauge-container">
         <div className="gauge-background">

@@ -106,10 +106,10 @@
 
 .gauge-fill {
   height: 100%;
-  background: linear-gradient(to right, #9c27b0, #ce93d8);
+  background: linear-gradient(to right, #ff9800, #ffb74d); /* Changed from purple to orange */
   border-radius: 15px;
   transition: width 0.3s ease-in-out, background 0.3s ease;
-  box-shadow: 0 0 10px rgba(156, 39, 176, 0.5);
+  box-shadow: 0 0 10px rgba(255, 152, 0, 0.5);
 }
 
 .task-item.overdue .gauge-background {
@@ -143,12 +143,12 @@
 }
 
 .task-timer-button.running {
-  background-color: #f44336;
-  box-shadow: 0 2px 5px rgba(244, 67, 54, 0.3);
+  background-color: #2196f3; /* Changed from red to blue */
+  box-shadow: 0 2px 5px rgba(33, 150, 243, 0.3);
 }
 
 .task-timer-button.running:hover {
-  background-color: #d32f2f;
+  background-color: #0b7dda; /* Changed from dark red to dark blue */
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(244, 67, 54, 0.4);
+  box-shadow: 0 4px 8px rgba(33, 150, 243, 0.4);
 }
