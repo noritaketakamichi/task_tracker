@@ -7,6 +7,37 @@
   display: flex;
   flex-direction: column;
   border-left: 4px solid #9c27b0;
+  transition: all 0.3s ease;
+}
+
+/* Overdue task styling */
+.task-item.overdue {
+  background-color: #ffebee;
+  border-left: 4px solid #f44336;
+  box-shadow: 0 3px 8px rgba(244, 67, 54, 0.4);
+  animation: pulse-red 2s infinite;
+}
+
+@keyframes pulse-red {
+  0% {
+    background-color: #ffebee;
+  }
+  50% {
+    background-color: #ffcdd2;
+  }
+  100% {
+    background-color: #ffebee;
+  }
+}
+
+.overdue-label {
+  color: #f44336;
+  font-weight: bold;
+  font-size: 0.9rem;
+  background-color: #ffcdd2;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
 }
 
 .task-header {
@@ -52,6 +83,13 @@
   padding: 15px;
   border-radius: 10px;
   box-shadow: 0 3px 10px rgba(156, 39, 176, 0.2);
+  transition: all 0.3s ease;
+}
+
+.task-item.overdue .time-display {
+  color: #f44336;
+  background-color: #fff8f8;
+  box-shadow: 0 3px 10px rgba(244, 67, 54, 0.2);
 }
 
 .gauge-container {
@@ -70,8 +108,18 @@
   height: 100%;
   background: linear-gradient(to right, #9c27b0, #ce93d8);
   border-radius: 15px;
-  transition: width 0.3s ease-in-out;
+  transition: width 0.3s ease-in-out, background 0.3s ease;
   box-shadow: 0 0 10px rgba(156, 39, 176, 0.5);
+}
+
+.task-item.overdue .gauge-background {
+  background-color: #ffcdd2;
+}
+
+.task-item.overdue .gauge-fill {
+  background: linear-gradient(to right, #f44336, #ef9a9a);
+  box-shadow: 0 0 10px rgba(244, 67, 54, 0.5);
+  width: 0% !important; /* Override the inline style */
 }
 
 .task-timer-button {

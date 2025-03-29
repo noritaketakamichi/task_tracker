@@ -3,7 +3,10 @@ import './DailyTimer.css';
 
 const DailyTimer = ({ dailyTime, isRunning, onTimerToggle }) => {
   const [remainingTime, setRemainingTime] = useState(dailyTime * 60); // Convert minutes to seconds
-  const percentage = (remainingTime / (dailyTime * 60)) * 100;
+  const [isOverdue, setIsOverdue] = useState(false);
+  
+  // Calculate percentage for the progress bar
+  const percentage = isOverdue ? 0 : (remainingTime / (dailyTime * 60)) * 100;
 
   // Format time as HH:MM:SS
   const formatTime = (seconds) => {
@@ -17,7 +20,13 @@ const DailyTimer = ({ dailyTime, isRunning, onTimerToggle }) => {
     let interval;
     if (isRunning && remainingTime > 0) {
       interval = setInterval(() => {
-        setRemainingTime(prevTime => Math.max(0, prevTime - 1));
+        setRemainingTime(prevTime => {
+          const newTime = Math.max(0, prevTime - 1);
+          if (newTime === 0) {
+            setIsOverdue(true);
+          }
+          return newTime;
+        });
       }, 1000);
     }
     return () => clearInterval(interval);
@@ -25,11 +34,12 @@ const DailyTimer = ({ dailyTime, isRunning, onTimerToggle }) => {
 
   useEffect(() => {
     setRemainingTime(dailyTime * 60);
+    setIsOverdue(false); // Reset overdue state when duration changes
   }, [dailyTime]);
 
   return (
-    <div className="daily-timer">
-      <h2>Daily Work Time</h2>
+    <div className={`daily-timer ${isOverdue ? 'overdue' : ''}`}>
+      <h2>Daily Work Time {isOverdue && <span className="overdue-label">OVERDUE</span>}</h2>
       <div className="time-display">{formatTime(remainingTime)}</div>
       <div className="gauge-container">
         <div className="gauge-background">

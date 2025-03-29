@@ -3,7 +3,10 @@ import './TaskItem.css';
 
 const TaskItem = ({ task, onDelete, onToggleTask }) => {
   const [remainingTime, setRemainingTime] = useState(task.duration * 60); // Convert minutes to seconds
-  const percentage = (remainingTime / (task.duration * 60)) * 100;
+  const [isOverdue, setIsOverdue] = useState(false);
+  
+  // Calculate percentage for the progress bar
+  const percentage = isOverdue ? 0 : (remainingTime / (task.duration * 60)) * 100;
   
   // Format time as MM:SS
   const formatTime = (seconds) => {
@@ -16,7 +19,13 @@ const TaskItem = ({ task, onDelete, onToggleTask }) => {
     let interval;
     if (task.isRunning && remainingTime > 0) {
       interval = setInterval(() => {
-        setRemainingTime(prevTime => Math.max(0, prevTime - 1));
+        setRemainingTime(prevTime => {
+          const newTime = Math.max(0, prevTime - 1);
+          if (newTime === 0) {
+            setIsOverdue(true);
+          }
+          return newTime;
+        });
       }, 1000);
     }
     return () => clearInterval(interval);
@@ -24,12 +33,13 @@ const TaskItem = ({ task, onDelete, onToggleTask }) => {
 
   useEffect(() => {
     setRemainingTime(task.duration * 60);
+    setIsOverdue(false); // Reset overdue state when duration changes
   }, [task.duration]);
 
   return (
-    <div className="task-item">
+    <div className={`task-item ${isOverdue ? 'overdue' : ''}`}>
       <div className="task-header">
-        <div></div> {/* Empty div to maintain the space */}
+        <div>{isOverdue && <span className="overdue-label">OVERDUE</span>}</div>
         <button className="delete-button" onClick={() => onDelete()}>×</button>
       </div>
       <div className="time-display">{formatTime(remainingTime)}</div>
