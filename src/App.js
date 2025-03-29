@@ -124,43 +124,45 @@ function App() {
       </header>
       
       <main className="App-main">
-        <div className="daily-time-input">
-          <label>My Focus Time Today:</label>
-          <div className="time-inputs">
-            <div className="time-input-group">
-              <input
-                type="number"
-                id="daily-hours"
-                value={dailyHours}
-                onChange={handleDailyHoursChange}
-                min="0"
-                className="hours-input"
-              />
-              <label htmlFor="daily-hours">hours</label>
+        {!isDailyTimerRunning && (
+          <div className="daily-time-input">
+            <label>My Focus Time Today:</label>
+            <div className="time-inputs">
+              <div className="time-input-group">
+                <input
+                  type="number"
+                  id="daily-hours"
+                  value={dailyHours}
+                  onChange={handleDailyHoursChange}
+                  min="0"
+                  className="hours-input"
+                />
+                <label htmlFor="daily-hours">hours</label>
+              </div>
+              <div className="time-input-group">
+                <input
+                  type="number"
+                  id="daily-minutes"
+                  value={dailyMinutes}
+                  onChange={handleDailyMinutesChange}
+                  min="0"
+                  max="59"
+                  className="minutes-input"
+                />
+                <label htmlFor="daily-minutes">minutes</label>
+              </div>
+              <button 
+                className="reset-button"
+                onClick={() => {
+                  setDailyHours('');
+                  setDailyMinutes('');
+                }}
+              >
+                Reset
+              </button>
             </div>
-            <div className="time-input-group">
-              <input
-                type="number"
-                id="daily-minutes"
-                value={dailyMinutes}
-                onChange={handleDailyMinutesChange}
-                min="0"
-                max="59"
-                className="minutes-input"
-              />
-              <label htmlFor="daily-minutes">minutes</label>
-            </div>
-            <button 
-              className="reset-button"
-              onClick={() => {
-                setDailyHours('');
-                setDailyMinutes('');
-              }}
-            >
-              Reset
-            </button>
           </div>
-        </div>
+        )}
         
         <div className="app-content">
           <DailyTimer 
