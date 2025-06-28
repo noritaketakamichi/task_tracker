@@ -152,10 +152,10 @@
     font-size: 1rem;
   }
   
-  /* Side-by-side layout for landscape */
+  /* Keep vertical layout for landscape */
   .app-content {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 15px;
     flex: 1;
     min-height: 0;
