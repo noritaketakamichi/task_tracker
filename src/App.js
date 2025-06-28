@@ -129,6 +129,8 @@ function App() {
                   onChange={handleDailyHoursChange}
                   min="0"
                   className="hours-input"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
                 />
                 <label htmlFor="daily-hours">hours</label>
               </div>
@@ -141,6 +143,8 @@ function App() {
                   min="0"
                   max="59"
                   className="minutes-input"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
                 />
                 <label htmlFor="daily-minutes">minutes</label>
               </div>

@@ -50,6 +50,8 @@ const TaskList = ({ tasks, onAddTask, onDeleteTask, onToggleTask }) => {
                 onChange={handleDurationChange}
                 min="1"
                 className="duration-input"
+                inputMode="numeric"
+                pattern="[0-9]*"
               />
               <button 
                 type="button" 
