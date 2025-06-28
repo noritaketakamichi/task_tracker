@@ -79,13 +79,7 @@ function App() {
     const newTimerState = !isDailyTimerRunning;
     setIsDailyTimerRunning(newTimerState);
     
-    // Update all tasks to match the daily timer state
-    if (tasks.length > 0) {
-      setTasks(tasks.map(task => ({
-        ...task,
-        isRunning: newTimerState
-      })));
-    }
+    // Daily timer runs independently - don't sync with task timer
   };
 
   // Add a new task (replacing any existing task)
@@ -114,8 +108,7 @@ function App() {
       return task;
     }));
 
-    // Also update the daily timer to match
-    setIsDailyTimerRunning(willBeRunning);
+    // Daily timer runs independently - don't sync with task timer
   };
 
   return (

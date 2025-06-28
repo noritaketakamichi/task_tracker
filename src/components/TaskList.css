@@ -98,9 +98,45 @@
   font-style: italic;
 }
 
-/* For iPad landscape orientation */
-@media (min-width: 1024px) {
+/* iPad landscape optimization */
+@media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .task-list {
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  .task-list h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+  
   .add-task-form {
     flex-wrap: nowrap;
+    margin-bottom: 15px;
+    gap: 8px;
+  }
+  
+  .input-container {
+    max-width: 200px;
+  }
+  
+  .duration-input {
+    padding: 10px;
+    font-size: 1rem;
+  }
+  
+  .add-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+  
+  .tasks-container {
+    flex: 1;
+    max-height: none;
+    overflow-y: auto;
+    padding-right: 5px;
   }
 }

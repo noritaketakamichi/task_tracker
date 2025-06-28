@@ -118,3 +118,36 @@
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(33, 150, 243, 0.4);
 }
+
+/* iPad landscape optimization */
+@media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .daily-timer {
+    padding: 20px;
+    margin-bottom: 15px;
+    height: fit-content;
+  }
+  
+  .daily-timer h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+  
+  .daily-timer .time-display {
+    font-size: 1.8rem;
+    margin: 12px 0;
+    padding: 8px;
+  }
+  
+  .gauge-container {
+    margin: 20px 0;
+  }
+  
+  .gauge-background {
+    height: 30px;
+  }
+  
+  .timer-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+}

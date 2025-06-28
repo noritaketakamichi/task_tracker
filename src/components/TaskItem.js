@@ -4,6 +4,7 @@ import './TaskItem.css';
 const TaskItem = ({ task, onDelete, onToggleTask }) => {
   const [remainingTime, setRemainingTime] = useState(task.duration * 60); // Convert minutes to seconds
   const [isOverdue, setIsOverdue] = useState(false);
+  const [overtimeSeconds, setOvertimeSeconds] = useState(0);
   
   // Calculate percentage for the progress bar
   const percentage = isOverdue ? 0 : (remainingTime / (task.duration * 60)) * 100;
@@ -17,23 +18,28 @@ const TaskItem = ({ task, onDelete, onToggleTask }) => {
 
   useEffect(() => {
     let interval;
-    if (task.isRunning && remainingTime > 0) {
+    if (task.isRunning) {
       interval = setInterval(() => {
-        setRemainingTime(prevTime => {
-          const newTime = Math.max(0, prevTime - 1);
-          if (newTime === 0) {
-            setIsOverdue(true);
-          }
-          return newTime;
-        });
+        if (remainingTime > 0) {
+          setRemainingTime(prevTime => {
+            const newTime = Math.max(0, prevTime - 1);
+            if (newTime === 0) {
+              setIsOverdue(true);
+            }
+            return newTime;
+          });
+        } else if (isOverdue) {
+          setOvertimeSeconds(prevOvertime => prevOvertime + 1);
+        }
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [task.isRunning, remainingTime]);
+  }, [task.isRunning, remainingTime, isOverdue]);
 
   useEffect(() => {
     setRemainingTime(task.duration * 60);
     setIsOverdue(false); // Reset overdue state when duration changes
+    setOvertimeSeconds(0); // Reset overtime when duration changes
   }, [task.duration]);
 
   return (
@@ -42,7 +48,9 @@ const TaskItem = ({ task, onDelete, onToggleTask }) => {
         <div>{isOverdue && <span className="overdue-label">OVERDUE</span>}</div>
         <button className="delete-button" onClick={() => onDelete()}>×</button>
       </div>
-      <div className="time-display">{formatTime(remainingTime)}</div>
+      <div className="time-display">
+        {isOverdue ? `+${formatTime(overtimeSeconds)}` : formatTime(remainingTime)}
+      </div>
       <div className="gauge-container">
         <div className="gauge-background">
           <div 

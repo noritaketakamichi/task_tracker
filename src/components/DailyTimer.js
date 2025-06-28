@@ -4,6 +4,7 @@ import './DailyTimer.css';
 const DailyTimer = ({ dailyTime, isRunning, onTimerToggle }) => {
   const [remainingTime, setRemainingTime] = useState(dailyTime * 60); // Convert minutes to seconds
   const [isOverdue, setIsOverdue] = useState(false);
+  const [overtimeSeconds, setOvertimeSeconds] = useState(0);
   
   // Calculate percentage for the progress bar
   const percentage = isOverdue ? 0 : (remainingTime / (dailyTime * 60)) * 100;
@@ -18,29 +19,36 @@ const DailyTimer = ({ dailyTime, isRunning, onTimerToggle }) => {
 
   useEffect(() => {
     let interval;
-    if (isRunning && remainingTime > 0) {
+    if (isRunning) {
       interval = setInterval(() => {
-        setRemainingTime(prevTime => {
-          const newTime = Math.max(0, prevTime - 1);
-          if (newTime === 0) {
-            setIsOverdue(true);
-          }
-          return newTime;
-        });
+        if (remainingTime > 0) {
+          setRemainingTime(prevTime => {
+            const newTime = Math.max(0, prevTime - 1);
+            if (newTime === 0) {
+              setIsOverdue(true);
+            }
+            return newTime;
+          });
+        } else if (isOverdue) {
+          setOvertimeSeconds(prevOvertime => prevOvertime + 1);
+        }
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [isRunning, remainingTime]);
+  }, [isRunning, remainingTime, isOverdue]);
 
   useEffect(() => {
     setRemainingTime(dailyTime * 60);
     setIsOverdue(false); // Reset overdue state when duration changes
+    setOvertimeSeconds(0); // Reset overtime when duration changes
   }, [dailyTime]);
 
   return (
     <div className={`daily-timer ${isOverdue ? 'overdue' : ''}`}>
       <h2>My Focus Time Today {isOverdue && <span className="overdue-label">OVERDUE</span>}</h2>
-      <div className="time-display">{formatTime(remainingTime)}</div>
+      <div className="time-display">
+        {isOverdue ? `+${formatTime(overtimeSeconds)}` : formatTime(remainingTime)}
+      </div>
       <div className="gauge-container">
         <div className="gauge-background">
           <div 
