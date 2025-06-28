@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import TaskItem from './TaskItem';
+import NumberPad from './NumberPad';
 import './TaskList.css';
 
 const TaskList = ({ tasks, onAddTask, onDeleteTask, onToggleTask }) => {
   const [newTaskDuration, setNewTaskDuration] = useState('');
+  const [showNumberPad, setShowNumberPad] = useState(false);
+  const [numberPadValue, setNumberPadValue] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,6 +35,19 @@ const TaskList = ({ tasks, onAddTask, onDeleteTask, onToggleTask }) => {
     setNewTaskDuration(e.target.value);
   };
 
+  // Number pad handlers
+  const openNumberPad = () => {
+    setNumberPadValue(newTaskDuration);
+    setShowNumberPad(true);
+  };
+
+  const closeNumberPad = () => {
+    const value = parseInt(numberPadValue) || 1;
+    setNewTaskDuration(Math.max(1, value).toString());
+    setShowNumberPad(false);
+    setNumberPadValue('');
+  };
+
   // Check if any task is running
   const isAnyTaskRunning = tasks.length > 0 && tasks.some(task => task.isRunning);
 
@@ -43,16 +59,13 @@ const TaskList = ({ tasks, onAddTask, onDeleteTask, onToggleTask }) => {
         !isAnyTaskRunning && (
           <form className="add-task-form" onSubmit={handleSubmit}>
             <div className="input-container">
-              <input
-                type="number"
-                placeholder="Duration (minutes)"
-                value={newTaskDuration}
-                onChange={handleDurationChange}
-                min="1"
-                className="duration-input"
-                inputMode="numeric"
-                pattern="[0-9]*"
-              />
+              <button 
+                type="button"
+                className="number-input-button"
+                onClick={openNumberPad}
+              >
+                {newTaskDuration || '1'} minutes
+              </button>
               <button 
                 type="button" 
                 className="reset-button"
@@ -73,6 +86,16 @@ const TaskList = ({ tasks, onAddTask, onDeleteTask, onToggleTask }) => {
             onToggleTask={onToggleTask}
           />
         </div>
+      )}
+      
+      {showNumberPad && (
+        <NumberPad
+          value={numberPadValue}
+          onChange={setNumberPadValue}
+          onClose={closeNumberPad}
+          title="Enter minutes"
+          maxValue={null}
+        />
       )}
     </div>
   );

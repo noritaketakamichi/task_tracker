@@ -62,29 +62,29 @@
   font-size: 1rem;
 }
 
-.time-input-group input {
-  padding: 10px;
+.number-input-button {
+  background-color: #e3f2fd;
+  color: #0066cc;
   border: 2px solid #bbdefb;
   border-radius: 8px;
-  width: 70px;
+  padding: 12px 20px;
   font-size: 1.1rem;
-  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  min-width: 120px;
+  text-align: center;
 }
 
-.time-input-group input:focus {
+.number-input-button:hover {
+  background-color: #bbdefb;
   border-color: #2196f3;
-  outline: none;
-  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(33, 150, 243, 0.2);
 }
 
-.hours-input {
-  background-color: #e3f2fd;
-}
-
-.minutes-input {
-  background-color: #e3f2fd;
+.number-input-button:active {
+  transform: scale(0.95);
 }
 
 .reset-button {
@@ -146,10 +146,10 @@
     gap: 12px;
   }
   
-  .time-input-group input {
-    width: 60px;
-    padding: 8px;
+  .number-input-button {
+    padding: 10px 16px;
     font-size: 1rem;
+    min-width: 100px;
   }
   
   /* Keep vertical layout for landscape */

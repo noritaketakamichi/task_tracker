@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DailyTimer from './components/DailyTimer';
 import TaskList from './components/TaskList';
+import NumberPad from './components/NumberPad';
 import './App.css';
 
 function App() {
@@ -20,6 +21,11 @@ function App() {
                     (dailyMinutes === '' ? 0 : parseInt(dailyMinutes, 10));
   
   const [isDailyTimerRunning, setIsDailyTimerRunning] = useState(false);
+  
+  // Number pad state
+  const [showNumberPad, setShowNumberPad] = useState(false);
+  const [numberPadValue, setNumberPadValue] = useState('');
+  const [numberPadType, setNumberPadType] = useState('');
   
   // State for tasks
   const [tasks, setTasks] = useState(() => {
@@ -92,6 +98,27 @@ function App() {
     setTasks([]); // Clear all tasks
   };
 
+  // Number pad handlers
+  const openNumberPad = (type, currentValue) => {
+    setNumberPadType(type);
+    setNumberPadValue(currentValue.toString());
+    setShowNumberPad(true);
+  };
+
+  const closeNumberPad = () => {
+    const value = parseInt(numberPadValue) || 0;
+    
+    if (numberPadType === 'hours') {
+      setDailyHours(value);
+    } else if (numberPadType === 'minutes') {
+      setDailyMinutes(Math.min(59, value));
+    }
+    
+    setShowNumberPad(false);
+    setNumberPadValue('');
+    setNumberPadType('');
+  };
+
   // Toggle a specific task's timer
   const toggleTaskTimer = (taskId) => {
     const targetTask = tasks.find(t => t.id === taskId);
@@ -122,31 +149,22 @@ function App() {
             <label>My Focus Time Today:</label>
             <div className="time-inputs">
               <div className="time-input-group">
-                <input
-                  type="number"
-                  id="daily-hours"
-                  value={dailyHours}
-                  onChange={handleDailyHoursChange}
-                  min="0"
-                  className="hours-input"
-                  inputMode="numeric"
-                  pattern="[0-9]*"
-                />
-                <label htmlFor="daily-hours">hours</label>
+                <button 
+                  type="button"
+                  className="number-input-button"
+                  onClick={() => openNumberPad('hours', dailyHours === '' ? 0 : dailyHours)}
+                >
+                  {dailyHours === '' ? 0 : dailyHours} hours
+                </button>
               </div>
               <div className="time-input-group">
-                <input
-                  type="number"
-                  id="daily-minutes"
-                  value={dailyMinutes}
-                  onChange={handleDailyMinutesChange}
-                  min="0"
-                  max="59"
-                  className="minutes-input"
-                  inputMode="numeric"
-                  pattern="[0-9]*"
-                />
-                <label htmlFor="daily-minutes">minutes</label>
+                <button 
+                  type="button"
+                  className="number-input-button"
+                  onClick={() => openNumberPad('minutes', dailyMinutes === '' ? 0 : dailyMinutes)}
+                >
+                  {dailyMinutes === '' ? 0 : dailyMinutes} minutes
+                </button>
               </div>
               <button 
                 className="reset-button"
@@ -175,6 +193,16 @@ function App() {
             onToggleTask={toggleTaskTimer}
           />
         </div>
+        
+        {showNumberPad && (
+          <NumberPad
+            value={numberPadValue}
+            onChange={setNumberPadValue}
+            onClose={closeNumberPad}
+            title={`Enter ${numberPadType}`}
+            maxValue={numberPadType === 'minutes' ? 59 : null}
+          />
+        )}
       </main>
     </div>
   );
