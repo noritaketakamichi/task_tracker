@@ -72,24 +72,40 @@
 }
 
 .time-display {
-  font-size: 2.5rem;
-  font-weight: bold;
+  font-size: 3.5rem;
+  font-weight: 900;
   text-align: center;
-  margin: 15px 0;
+  margin: 20px 0;
   font-family: 'Courier New', monospace;
   color: #6a0080;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: #ffffff;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 3px 10px rgba(156, 39, 176, 0.2);
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, #ffffff 0%, #f9f0ff 100%);
+  padding: 25px 20px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(156, 39, 176, 0.3);
   transition: all 0.3s ease;
+  border: 3px solid #e1bee7;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.05em;
+  animation: subtle-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes subtle-glow {
+  0% {
+    box-shadow: 0 5px 20px rgba(156, 39, 176, 0.3);
+  }
+  100% {
+    box-shadow: 0 8px 30px rgba(156, 39, 176, 0.5);
+  }
 }
 
 .task-item.overdue .time-display {
   color: #f44336;
-  background-color: #fff8f8;
-  box-shadow: 0 3px 10px rgba(244, 67, 54, 0.2);
+  background: linear-gradient(135deg, #fff8f8 0%, #ffebee 100%);
+  box-shadow: 0 5px 20px rgba(244, 67, 54, 0.4);
+  border-color: #ffcdd2;
+  text-shadow: 0 3px 6px rgba(244, 67, 54, 0.2);
 }
 
 .gauge-container {
@@ -166,9 +182,10 @@
   }
   
   .time-display {
-    font-size: 2rem;
-    margin: 12px 0;
-    padding: 12px;
+    font-size: 2.8rem;
+    margin: 18px 0;
+    padding: 20px 15px;
+    font-weight: 900;
   }
   
   .gauge-container {
