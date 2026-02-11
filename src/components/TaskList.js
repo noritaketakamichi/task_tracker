@@ -20,21 +20,6 @@ const TaskList = ({ tasks, onAddTask, onDeleteTask, onToggleTask }) => {
     }
   }, [newTaskDuration, onAddTask]);
 
-  const handleDurationChange = useCallback((e) => {
-    // If the input is empty, set to empty string
-    if (e.target.value === '') {
-      setNewTaskDuration('');
-      return;
-    }
-
-    // Only allow half-width numeric characters (0-9)
-    if (!/^[0-9]+$/.test(e.target.value)) {
-      return;
-    }
-
-    setNewTaskDuration(e.target.value);
-  }, []);
-
   // Number pad handlers
   const openNumberPad = useCallback(() => {
     setNumberPadValue(newTaskDuration);

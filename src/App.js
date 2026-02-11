@@ -42,44 +42,6 @@ function App() {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
-  // Handle daily hours input
-  const handleDailyHoursChange = useCallback((e) => {
-    // If the input is empty, set to empty string
-    if (e.target.value === '') {
-      setDailyHours('');
-      return;
-    }
-
-    // Only allow half-width numeric characters (0-9)
-    if (!/^[0-9]+$/.test(e.target.value)) {
-      return;
-    }
-
-    const value = parseInt(e.target.value, 10);
-    if (!isNaN(value) && value >= 0) {
-      setDailyHours(value);
-    }
-  }, []);
-
-  // Handle daily minutes input
-  const handleDailyMinutesChange = useCallback((e) => {
-    // If the input is empty, set to empty string
-    if (e.target.value === '') {
-      setDailyMinutes('');
-      return;
-    }
-
-    // Only allow half-width numeric characters (0-9)
-    if (!/^[0-9]+$/.test(e.target.value)) {
-      return;
-    }
-
-    const value = parseInt(e.target.value, 10);
-    if (!isNaN(value) && value >= 0 && value < 60) {
-      setDailyMinutes(value);
-    }
-  }, []);
-
   // Toggle daily timer
   const toggleDailyTimer = useCallback(() => {
     setIsDailyTimerRunning(prev => !prev);
