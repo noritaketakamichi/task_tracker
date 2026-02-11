@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import TaskItem from './TaskItem';
 import NumberPad from './NumberPad';
 import './TaskList.css';
@@ -8,7 +8,7 @@ const TaskList = ({ tasks, onAddTask, onDeleteTask, onToggleTask }) => {
   const [showNumberPad, setShowNumberPad] = useState(false);
   const [numberPadValue, setNumberPadValue] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = useCallback((e) => {
     e.preventDefault();
     if (newTaskDuration) {
       onAddTask({
@@ -18,35 +18,35 @@ const TaskList = ({ tasks, onAddTask, onDeleteTask, onToggleTask }) => {
       });
       setNewTaskDuration('');
     }
-  };
-  
-  const handleDurationChange = (e) => {
+  }, [newTaskDuration, onAddTask]);
+
+  const handleDurationChange = useCallback((e) => {
     // If the input is empty, set to empty string
     if (e.target.value === '') {
       setNewTaskDuration('');
       return;
     }
-    
+
     // Only allow half-width numeric characters (0-9)
     if (!/^[0-9]+$/.test(e.target.value)) {
       return;
     }
-    
+
     setNewTaskDuration(e.target.value);
-  };
+  }, []);
 
   // Number pad handlers
-  const openNumberPad = () => {
+  const openNumberPad = useCallback(() => {
     setNumberPadValue(newTaskDuration);
     setShowNumberPad(true);
-  };
+  }, [newTaskDuration]);
 
-  const closeNumberPad = () => {
+  const closeNumberPad = useCallback(() => {
     const value = parseInt(numberPadValue) || 1;
     setNewTaskDuration(Math.max(1, value).toString());
     setShowNumberPad(false);
     setNumberPadValue('');
-  };
+  }, [numberPadValue]);
 
   // Check if any task is running
   const isAnyTaskRunning = tasks.length > 0 && tasks.some(task => task.isRunning);

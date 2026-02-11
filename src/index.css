@@ -20,6 +20,10 @@ code {
 
 button {
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 input:focus, button:focus {

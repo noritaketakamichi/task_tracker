@@ -7,7 +7,7 @@
   display: flex;
   flex-direction: column;
   border-left: 4px solid #9c27b0;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, border-left-color 0.3s ease;
 }
 
 /* Overdue task styling */
@@ -16,6 +16,7 @@
   border-left: 4px solid #f44336;
   box-shadow: 0 3px 8px rgba(244, 67, 54, 0.4);
   animation: pulse-red 2s infinite;
+  will-change: background-color;
 }
 
 @keyframes pulse-red {
@@ -83,12 +84,13 @@
   padding: 25px 20px;
   border-radius: 15px;
   box-shadow: 0 5px 20px rgba(156, 39, 176, 0.3);
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   border: 3px solid #e1bee7;
   position: relative;
   overflow: hidden;
   letter-spacing: 0.05em;
   animation: subtle-glow 3s ease-in-out infinite alternate;
+  will-change: box-shadow;
 }
 
 @keyframes subtle-glow {
@@ -148,14 +150,16 @@
   font-size: 1.1rem;
   font-weight: bold;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: background-color 0.3s, box-shadow 0.3s;
   box-shadow: 0 2px 5px rgba(156, 39, 176, 0.3);
 }
 
-.task-timer-button:hover {
-  background-color: #7b1fa2;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(156, 39, 176, 0.4);
+@media (hover: hover) {
+  .task-timer-button:hover {
+    background-color: #7b1fa2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(156, 39, 176, 0.4);
+  }
 }
 
 .task-timer-button.running {
@@ -163,10 +167,12 @@
   box-shadow: 0 2px 5px rgba(33, 150, 243, 0.3);
 }
 
-.task-timer-button.running:hover {
-  background-color: #0b7dda; /* Changed from dark red to dark blue */
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(33, 150, 243, 0.4);
+@media (hover: hover) {
+  .task-timer-button.running:hover {
+    background-color: #0b7dda; /* Changed from dark red to dark blue */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(33, 150, 243, 0.4);
+  }
 }
 
 /* iPad landscape optimization */

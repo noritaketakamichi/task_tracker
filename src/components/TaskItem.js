@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './TaskItem.css';
 
 const TaskItem = ({ task, onDelete, onToggleTask }) => {
-  const [remainingTime, setRemainingTime] = useState(task.duration * 60); // Convert minutes to seconds
+  const remainingTimeRef = useRef(task.duration * 60);
+  const isOverdueRef = useRef(false);
+  const [displayTime, setDisplayTime] = useState(task.duration * 60);
+  const [displayOvertime, setDisplayOvertime] = useState(0);
   const [isOverdue, setIsOverdue] = useState(false);
-  const [overtimeSeconds, setOvertimeSeconds] = useState(0);
-  
+
   // Calculate percentage for the progress bar
-  const percentage = isOverdue ? 0 : (remainingTime / (task.duration * 60)) * 100;
-  
+  const percentage = isOverdue ? 0 : (displayTime / (task.duration * 60)) * 100;
+
   // Format time as MM:SS
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -20,26 +22,27 @@ const TaskItem = ({ task, onDelete, onToggleTask }) => {
     let interval;
     if (task.isRunning) {
       interval = setInterval(() => {
-        if (remainingTime > 0) {
-          setRemainingTime(prevTime => {
-            const newTime = Math.max(0, prevTime - 1);
-            if (newTime === 0) {
-              setIsOverdue(true);
-            }
-            return newTime;
-          });
-        } else if (isOverdue) {
-          setOvertimeSeconds(prevOvertime => prevOvertime + 1);
+        if (remainingTimeRef.current > 0) {
+          remainingTimeRef.current -= 1;
+          setDisplayTime(remainingTimeRef.current);
+          if (remainingTimeRef.current === 0) {
+            isOverdueRef.current = true;
+            setIsOverdue(true);
+          }
+        } else if (isOverdueRef.current) {
+          setDisplayOvertime(prev => prev + 1);
         }
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [task.isRunning, remainingTime, isOverdue]);
+  }, [task.isRunning]);
 
   useEffect(() => {
-    setRemainingTime(task.duration * 60);
-    setIsOverdue(false); // Reset overdue state when duration changes
-    setOvertimeSeconds(0); // Reset overtime when duration changes
+    remainingTimeRef.current = task.duration * 60;
+    isOverdueRef.current = false;
+    setDisplayTime(task.duration * 60);
+    setIsOverdue(false);
+    setDisplayOvertime(0);
   }, [task.duration]);
 
   return (
@@ -49,7 +52,7 @@ const TaskItem = ({ task, onDelete, onToggleTask }) => {
         <button className="delete-button" onClick={() => onDelete()}>×</button>
       </div>
       <div className="time-display">
-        {isOverdue ? `+${formatTime(overtimeSeconds)}` : formatTime(remainingTime)}
+        {isOverdue ? `+${formatTime(displayOvertime)}` : formatTime(displayTime)}
       </div>
       <div className="gauge-container">
         <div className="gauge-background">

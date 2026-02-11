@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './DailyTimer.css';
 
 const DailyTimer = ({ dailyTime, isRunning, onTimerToggle }) => {
-  const [remainingTime, setRemainingTime] = useState(dailyTime * 60); // Convert minutes to seconds
+  const remainingTimeRef = useRef(dailyTime * 60);
+  const isOverdueRef = useRef(false);
+  const [displayTime, setDisplayTime] = useState(dailyTime * 60);
+  const [displayOvertime, setDisplayOvertime] = useState(0);
   const [isOverdue, setIsOverdue] = useState(false);
-  const [overtimeSeconds, setOvertimeSeconds] = useState(0);
-  
+
   // Calculate percentage for the progress bar
-  const percentage = isOverdue ? 0 : (remainingTime / (dailyTime * 60)) * 100;
+  const percentage = isOverdue ? 0 : (displayTime / (dailyTime * 60)) * 100;
 
   // Format time as HH:MM:SS
   const formatTime = (seconds) => {
@@ -21,33 +23,34 @@ const DailyTimer = ({ dailyTime, isRunning, onTimerToggle }) => {
     let interval;
     if (isRunning) {
       interval = setInterval(() => {
-        if (remainingTime > 0) {
-          setRemainingTime(prevTime => {
-            const newTime = Math.max(0, prevTime - 1);
-            if (newTime === 0) {
-              setIsOverdue(true);
-            }
-            return newTime;
-          });
-        } else if (isOverdue) {
-          setOvertimeSeconds(prevOvertime => prevOvertime + 1);
+        if (remainingTimeRef.current > 0) {
+          remainingTimeRef.current -= 1;
+          setDisplayTime(remainingTimeRef.current);
+          if (remainingTimeRef.current === 0) {
+            isOverdueRef.current = true;
+            setIsOverdue(true);
+          }
+        } else if (isOverdueRef.current) {
+          setDisplayOvertime(prev => prev + 1);
         }
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [isRunning, remainingTime, isOverdue]);
+  }, [isRunning]);
 
   useEffect(() => {
-    setRemainingTime(dailyTime * 60);
-    setIsOverdue(false); // Reset overdue state when duration changes
-    setOvertimeSeconds(0); // Reset overtime when duration changes
+    remainingTimeRef.current = dailyTime * 60;
+    isOverdueRef.current = false;
+    setDisplayTime(dailyTime * 60);
+    setIsOverdue(false);
+    setDisplayOvertime(0);
   }, [dailyTime]);
 
   return (
     <div className={`daily-timer ${isOverdue ? 'overdue' : ''}`}>
       <h2>My Focus Time Today {isOverdue && <span className="overdue-label">OVERDUE</span>}</h2>
       <div className="time-display">
-        {isOverdue ? `+${formatTime(overtimeSeconds)}` : formatTime(remainingTime)}
+        {isOverdue ? `+${formatTime(displayOvertime)}` : formatTime(displayTime)}
       </div>
       <div className="gauge-container">
         <div className="gauge-background">

@@ -84,18 +84,20 @@
   font-size: 1.3rem;
   font-weight: bold;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background-color 0.2s, box-shadow 0.2s;
   touch-action: manipulation;
 }
 
-.number-button:hover {
-  background-color: #0b7dda;
-  transform: translateY(-2px);
-}
+@media (hover: hover) {
+  .number-button:hover {
+    background-color: #0b7dda;
+    transform: translateY(-2px);
+  }
 
-.number-button:active {
-  background-color: #0d47a1;
-  transform: translateY(0);
+  .number-button:active {
+    background-color: #0d47a1;
+    transform: translateY(0);
+  }
 }
 
 .clear-button {
@@ -126,18 +128,20 @@
   font-size: 1.2rem;
   font-weight: bold;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background-color 0.2s, box-shadow 0.2s;
   touch-action: manipulation;
 }
 
-.done-button:hover {
-  background-color: #45a049;
-  transform: translateY(-2px);
-}
+@media (hover: hover) {
+  .done-button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+  }
 
-.done-button:active {
-  background-color: #388e3c;
-  transform: translateY(0);
+  .done-button:active {
+    background-color: #388e3c;
+    transform: translateY(0);
+  }
 }
 
 /* iPad landscape optimization */

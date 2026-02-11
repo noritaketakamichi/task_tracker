@@ -1,24 +1,24 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import './NumberPad.css';
 
 const NumberPad = ({ value, onChange, onClose, title, maxValue = null }) => {
-  const handleNumberClick = (digit) => {
+  const handleNumberClick = useCallback((digit) => {
     const newValue = value + digit;
     if (maxValue && parseInt(newValue) > maxValue) return;
     onChange(newValue);
-  };
+  }, [value, onChange, maxValue]);
 
-  const handleClear = () => {
+  const handleClear = useCallback(() => {
     onChange('');
-  };
+  }, [onChange]);
 
-  const handleBackspace = () => {
+  const handleBackspace = useCallback(() => {
     onChange(value.slice(0, -1));
-  };
+  }, [value, onChange]);
 
-  const handleDone = () => {
+  const handleDone = useCallback(() => {
     onClose();
-  };
+  }, [onClose]);
 
   return (
     <div className="number-pad-overlay">

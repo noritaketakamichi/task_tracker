@@ -40,21 +40,23 @@
   font-size: 1.1rem;
   font-weight: bold;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
   min-width: 120px;
   text-align: center;
   flex: 1;
 }
 
-.number-input-button:hover {
-  background-color: #e1bee7;
-  border-color: #9c27b0;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(156, 39, 176, 0.2);
-}
+@media (hover: hover) {
+  .number-input-button:hover {
+    background-color: #e1bee7;
+    border-color: #9c27b0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(156, 39, 176, 0.2);
+  }
 
-.number-input-button:active {
-  transform: scale(0.95);
+  .number-input-button:active {
+    transform: scale(0.95);
+  }
 }
 
 .add-button {
@@ -66,14 +68,16 @@
   font-size: 1.1rem;
   font-weight: bold;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: background-color 0.3s, box-shadow 0.3s;
   box-shadow: 0 2px 5px rgba(156, 39, 176, 0.3);
 }
 
-.add-button:hover {
-  background-color: #7b1fa2;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(156, 39, 176, 0.4);
+@media (hover: hover) {
+  .add-button:hover {
+    background-color: #7b1fa2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(156, 39, 176, 0.4);
+  }
 }
 
 .reset-button {
@@ -85,14 +89,16 @@
   font-size: 0.9rem;
   font-weight: bold;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: background-color 0.3s, box-shadow 0.3s;
   box-shadow: 0 2px 5px rgba(158, 158, 158, 0.3);
 }
 
-.reset-button:hover {
-  background-color: #757575; /* Changed from dark orange to dark gray */
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(158, 158, 158, 0.4);
+@media (hover: hover) {
+  .reset-button:hover {
+    background-color: #757575; /* Changed from dark orange to dark gray */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(158, 158, 158, 0.4);
+  }
 }
 
 .tasks-container {

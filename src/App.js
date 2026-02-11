@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import DailyTimer from './components/DailyTimer';
 import TaskList from './components/TaskList';
 import NumberPad from './components/NumberPad';
@@ -43,100 +43,90 @@ function App() {
   }, [tasks]);
 
   // Handle daily hours input
-  const handleDailyHoursChange = (e) => {
+  const handleDailyHoursChange = useCallback((e) => {
     // If the input is empty, set to empty string
     if (e.target.value === '') {
       setDailyHours('');
       return;
     }
-    
+
     // Only allow half-width numeric characters (0-9)
     if (!/^[0-9]+$/.test(e.target.value)) {
       return;
     }
-    
+
     const value = parseInt(e.target.value, 10);
     if (!isNaN(value) && value >= 0) {
       setDailyHours(value);
     }
-  };
+  }, []);
 
   // Handle daily minutes input
-  const handleDailyMinutesChange = (e) => {
+  const handleDailyMinutesChange = useCallback((e) => {
     // If the input is empty, set to empty string
     if (e.target.value === '') {
       setDailyMinutes('');
       return;
     }
-    
+
     // Only allow half-width numeric characters (0-9)
     if (!/^[0-9]+$/.test(e.target.value)) {
       return;
     }
-    
+
     const value = parseInt(e.target.value, 10);
     if (!isNaN(value) && value >= 0 && value < 60) {
       setDailyMinutes(value);
     }
-  };
+  }, []);
 
   // Toggle daily timer
-  const toggleDailyTimer = () => {
-    const newTimerState = !isDailyTimerRunning;
-    setIsDailyTimerRunning(newTimerState);
-    
-    // Daily timer runs independently - don't sync with task timer
-  };
+  const toggleDailyTimer = useCallback(() => {
+    setIsDailyTimerRunning(prev => !prev);
+  }, []);
 
   // Add a new task (replacing any existing task)
-  const addTask = (task) => {
+  const addTask = useCallback((task) => {
     setTasks([task]); // Only keep the new task
-  };
+  }, []);
 
   // Delete a task
-  const deleteTask = () => {
+  const deleteTask = useCallback(() => {
     setTasks([]); // Clear all tasks
-  };
+  }, []);
 
   // Number pad handlers
-  const openNumberPad = (type, currentValue) => {
+  const openNumberPad = useCallback((type, currentValue) => {
     setNumberPadType(type);
     setNumberPadValue(currentValue.toString());
     setShowNumberPad(true);
-  };
+  }, []);
 
-  const closeNumberPad = () => {
-    const value = parseInt(numberPadValue) || 0;
-    
-    if (numberPadType === 'hours') {
-      setDailyHours(value);
-    } else if (numberPadType === 'minutes') {
-      setDailyMinutes(Math.min(59, value));
-    }
-    
+  const closeNumberPad = useCallback(() => {
+    setNumberPadValue(prev => {
+      const value = parseInt(prev) || 0;
+      setNumberPadType(prevType => {
+        if (prevType === 'hours') {
+          setDailyHours(value);
+        } else if (prevType === 'minutes') {
+          setDailyMinutes(Math.min(59, value));
+        }
+        return '';
+      });
+      return '';
+    });
     setShowNumberPad(false);
-    setNumberPadValue('');
-    setNumberPadType('');
-  };
+  }, []);
 
   // Toggle a specific task's timer
-  const toggleTaskTimer = (taskId) => {
-    const targetTask = tasks.find(t => t.id === taskId);
-    if (!targetTask) return;
-
-    // Determine if we're starting or stopping the task
-    const willBeRunning = !targetTask.isRunning;
-
-    // Update the task's running state
-    setTasks(tasks.map(task => {
+  const toggleTaskTimer = useCallback((taskId) => {
+    setTasks(prevTasks => prevTasks.map(task => {
       if (task.id === taskId) {
-        return { ...task, isRunning: willBeRunning };
+        return { ...task, isRunning: !task.isRunning };
       }
       return task;
     }));
-
-    // Daily timer runs independently - don't sync with task timer
-  };
+  }, []);
 
   return (
     <div className="App">

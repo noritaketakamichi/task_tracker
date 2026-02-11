@@ -71,20 +71,22 @@
   font-size: 1.1rem;
   font-weight: bold;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
   min-width: 120px;
   text-align: center;
 }
 
-.number-input-button:hover {
-  background-color: #bbdefb;
-  border-color: #2196f3;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(33, 150, 243, 0.2);
-}
+@media (hover: hover) {
+  .number-input-button:hover {
+    background-color: #bbdefb;
+    border-color: #2196f3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(33, 150, 243, 0.2);
+  }
 
-.number-input-button:active {
-  transform: scale(0.95);
+  .number-input-button:active {
+    transform: scale(0.95);
+  }
 }
 
 .reset-button {
@@ -96,15 +98,17 @@
   font-size: 0.9rem;
   font-weight: bold;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: background-color 0.3s, box-shadow 0.3s;
   box-shadow: 0 2px 5px rgba(158, 158, 158, 0.3);
   margin-left: 10px;
 }
 
-.reset-button:hover {
-  background-color: #757575; /* Changed from dark orange to dark gray */
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(158, 158, 158, 0.4);
+@media (hover: hover) {
+  .reset-button:hover {
+    background-color: #757575; /* Changed from dark orange to dark gray */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(158, 158, 158, 0.4);
+  }
 }
 
 
@@ -121,6 +125,7 @@
     max-width: 100%;
     padding: 15px;
     height: 100vh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
   }
